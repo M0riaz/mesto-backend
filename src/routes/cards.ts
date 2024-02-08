@@ -18,7 +18,6 @@ router.post('/', celebrate({
         .max(30),
       link: Joi.string()
         .required()
-        .min(7)
         .custom((v: string) => {
           if (validator.isURL(v)) return v;
           throw new BadRequestError('Введите корректную ссылку');

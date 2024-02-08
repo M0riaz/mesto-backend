@@ -25,7 +25,13 @@ export const getUserById = (req: Request, res: Response, next: NextFunction) => 
         res.send({ data: user });
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректный ID пользователя'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 export const login = (req: Request, res: Response, next: NextFunction) => {

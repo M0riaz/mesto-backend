@@ -1,13 +1,42 @@
 import { Request } from 'express';
-
-export const STATUS_CODE_BAD_REQUEST = 400;
-export const STATUS_CODE_NOT_FOUND = 404;
-export const STATUS_CODE_INTERNAL_SERVER_ERROR = 500;
-export const STATUS_CODE_UNAUTHORIZED = 401;
-export const STATUS_CODE_FORBIDDEN = 403;
+import { celebrate, Joi } from 'celebrate';
+import validator from 'validator';
+import BadRequestError from './errors/BadRequestError';
 
 export interface CustomRequest extends Request {
   user: {
     _id: string;
   };
 }
+
+export const createUserValidation = celebrate({
+  body: Joi.object()
+    .keys({
+      email: Joi.string()
+        .required()
+        .email(),
+      password: Joi.string()
+        .required(),
+      name: Joi.string()
+        .min(2)
+        .max(30),
+      about: Joi.string()
+        .min(2)
+        .max(200),
+      avatar: Joi.string()
+        .custom((v: string) => {
+          if (validator.isURL(v)) return v;
+          throw new BadRequestError('Введите корректную ссылку =)');
+        }),
+    }),
+});
+export const loginValidation = celebrate({
+  body: Joi.object()
+    .keys({
+      email: Joi.string()
+        .required()
+        .email(),
+      password: Joi.string()
+        .required(),
+    }),
+});
