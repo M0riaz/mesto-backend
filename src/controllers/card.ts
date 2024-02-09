@@ -12,7 +12,7 @@ export const getCard = (req: Request, res: Response, next: NextFunction) => {
     .catch(next);
 };
 
-export const createCard = (req: Request, res: Response, next: NextFunction) => {
+export const createCard = (req: any, res: Response, next: NextFunction) => {
   const {
     name,
     link,
@@ -34,7 +34,7 @@ export const createCard = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-export const deleteCard = (req: Request, res: Response, next: NextFunction) => {
+export const deleteCard = (req: any, res: Response, next: NextFunction) => {
   Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
@@ -60,7 +60,7 @@ export const deleteCard = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-export const putLikes = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const putLikes = (req: any, res: Response, next: NextFunction) => {
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .then((like) => {
       if (!like) {
@@ -78,7 +78,7 @@ export const putLikes = (req: CustomRequest, res: Response, next: NextFunction) 
     });
 };
 
-export const deleteLike = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const deleteLike = (req: any, res: Response, next: NextFunction) => {
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .then((like) => {
       if (!like) {

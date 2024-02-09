@@ -89,7 +89,7 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-export const patchUser = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const patchUser = (req: any, res: Response, next: NextFunction) => {
   User.findByIdAndUpdate(
     req.user._id,
     {
@@ -117,7 +117,7 @@ export const patchUser = (req: CustomRequest, res: Response, next: NextFunction)
     });
 };
 
-export const patchAvatar = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const patchAvatar = (req: any, res: Response, next: NextFunction) => {
   User.findByIdAndUpdate(
     req.user._id,
     { avatar: req.body.avatar },
@@ -142,7 +142,7 @@ export const patchAvatar = (req: CustomRequest, res: Response, next: NextFunctio
     });
 };
 
-export const getUserInfo = (req: SessionRequest, res: Response, next: NextFunction) => {
+export const getUserInfo = (req: any, res: Response, next: NextFunction) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {

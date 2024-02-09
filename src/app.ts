@@ -31,7 +31,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(errorLogger);
 app.use(errors());
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+interface CustomError extends Error {
+  statusCode? : number
+}
+app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err.statusCode || 500;
   const message = statusCode === 500 ? 'На сервере произошла ошибка =(' : err.message;
 
