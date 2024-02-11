@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import express, { NextFunction, Request, Response } from 'express';
 import { errors } from 'celebrate';
+import cors from 'cors';
 import cardRouter from './routes/cards';
 import userRouter from './routes/users';
 import { createUser, login } from './controllers/user';
@@ -12,7 +13,7 @@ import NotFoundError from './utils/errors/NotFoundError';
 
 const { PORT = 3000 } = process.env;
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
