@@ -10,7 +10,7 @@ import ConflictError from '../utils/errors/ConflictError';
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
   User.find({})
-    .then((users) => res.send({ data: users }))
+    .then((users) => res.send(users))
     .catch(next);
 };
 
@@ -22,7 +22,7 @@ export const getUserById = (req: Request, res: Response, next: NextFunction) => 
       if (!user) {
         throw new NotFoundError('Пользователь по указанному _id не найден');
       } else {
-        res.send({ data: user });
+        res.send(user);
       }
     })
     .catch((err) => {
@@ -105,7 +105,7 @@ export const patchUser = (req: any, res: Response, next: NextFunction) => {
       if (!user) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       } else {
-        res.send({ data: user });
+        res.send(user);
       }
     })
     .catch((err) => {
@@ -130,7 +130,7 @@ export const patchAvatar = (req: any, res: Response, next: NextFunction) => {
       if (!ava) {
         throw new NotFoundError('Пользователь с указанным _id не найден');
       } else {
-        res.send({ data: ava });
+        res.send(ava);
       }
     })
     .catch((err) => {

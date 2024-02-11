@@ -8,23 +8,23 @@ import InternalServerError from '../utils/errors/InternalServerError';
 
 export const getCard = (req: Request, res: Response, next: NextFunction) => {
   Card.find({})
-    .then((cards) => res.send({ data: cards }))
+    .then((cards) => res.send(cards))
     .catch(next);
 };
 
-export const createCard = (req: any, res: Response, next: NextFunction) => {
+export const createCard = async (req: any, res: Response, next: NextFunction) => {
   const {
     name,
     link,
   } = req.body;
   const owner = req.user._id;
-
-  return Card.create({
+  console.log('создаю карту', link);
+  const newcard = await Card.create({
     name,
     link,
     owner,
   })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
@@ -32,6 +32,8 @@ export const createCard = (req: any, res: Response, next: NextFunction) => {
         next(err);
       }
     });
+  console.log(newcard);
+  return newcard;
 };
 
 export const deleteCard = (req: any, res: Response, next: NextFunction) => {
@@ -66,7 +68,7 @@ export const putLikes = (req: any, res: Response, next: NextFunction) => {
       if (!like) {
         throw new NotFoundError('Передан несуществующий _id карточки');
       } else {
-        res.send({ data: like });
+        res.send(like);
       }
     })
     .catch((err) => {
@@ -84,7 +86,7 @@ export const deleteLike = (req: any, res: Response, next: NextFunction) => {
       if (!like) {
         throw new NotFoundError('Передан несуществующий _id карточки');
       } else {
-        res.send({ data: like });
+        res.send(like);
       }
     })
     .catch((err) => {

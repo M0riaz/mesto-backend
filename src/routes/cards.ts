@@ -33,7 +33,7 @@ router.delete('/:cardId', celebrate({
         .required(),
     }),
 }), deleteCard);
-router.put('/:cardId/likes', celebrate({
+router.put('/likes/:cardId', celebrate({
   params: Joi.object()
     .keys({
       cardId: Joi.string()
@@ -42,7 +42,7 @@ router.put('/:cardId/likes', celebrate({
         .required(),
     }),
 }), putLikes);
-router.delete('/:cardId/likes', celebrate({
+router.delete('/likes/:cardId', celebrate({
   params: Joi.object()
     .keys({
       cardId: Joi.string()
